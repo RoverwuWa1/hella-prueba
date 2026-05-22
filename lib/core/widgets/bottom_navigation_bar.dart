@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../features/challenges/view/home_screen.dart';
 import '../../features/perfil/view/perfil_screen.dart';
+import '../../features/challenges/view/challenges_screen.dart';
+import '../../features/tips/view/tips_screen.dart';
 // import '../../screens/explorar_screen.dart'; // descomenta cuando la crees
 
 class MainScreen extends StatefulWidget {
@@ -15,7 +17,8 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const Scaffold(body: Center(child: Text('Próximamente'))), // Explorar temporal
+    const ChallengesScreen(),
+    const TipsScreen(),
     const PerfilScreen(),
   ];
 
@@ -24,6 +27,8 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: NavigationBar(
+        backgroundColor: const Color.fromARGB(255, 42, 177, 62),      //  Color de fondo de la barra
+        indicatorColor: const Color.fromARGB(255, 187, 251, 189),   //  Color del indicador del tab activo
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
           setState(() => _currentIndex = index);
@@ -35,9 +40,14 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Inicio',
           ),
           NavigationDestination(
-            icon: Icon(Icons.explore_outlined),
-            selectedIcon: Icon(Icons.explore_rounded),
-            label: 'Explorar',
+            icon: Icon(Icons.emoji_events_outlined),
+            selectedIcon: Icon(Icons.emoji_events_rounded),
+            label: 'Retos',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.info_outline),
+            selectedIcon: Icon(Icons.info_rounded),
+            label: 'Tips',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline_rounded),

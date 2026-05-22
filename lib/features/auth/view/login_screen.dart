@@ -9,6 +9,9 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+// ============================================================
+//  NO TOCAR — Lógica de autenticación
+// ============================================================
 class _LoginScreenState extends State<LoginScreen> {
   final AuthService _authService = AuthService();
   String? _errorMessage;
@@ -17,10 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _errorMessage = null);
     try {
       final user = await _authService.signInWithGoogle();
-      if (user == null) return; // Usuario canceló
-
+      if (user == null) return;
       if (mounted) {
-        // Navega a tu pantalla principal
         Navigator.of(context).pushReplacementNamed('/home');
       }
     } catch (e) {
@@ -29,72 +30,82 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
+// ============================================================
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+
+      //  DISEÑO: Cambia el color de fondo de la pantalla
+      backgroundColor: Colors.white,
+
       body: SafeArea(
         child: Padding(
+
+          //  DISEÑO: Ajusta el espacio a los lados
           padding: const EdgeInsets.symmetric(horizontal: 32),
+
           child: Column(
             children: [
-              const Spacer(flex: 2),
 
-              // Logo / Ilustración
-              Container(
-                width: 88,
-                height: 88,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 20,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: const Icon(
-                  Icons.lock_outline_rounded,
-                  size: 40,
-                  color: Color(0xFF4285F4),
-                ),
+              const Spacer(),
+
+              // ============================================================
+              //  BLOQUE 1 — Logo o imagen de la app
+              // Aquí va el logo, ícono o imagen principal de la app.
+              // Se puede cambiar el ícono, poner una imagen, cambiar
+              // el color o quitar el contenedor por completo.
+              // ============================================================
+              const Icon(
+                Icons.lock_outline_rounded,
+                size: 64,
+                color: Colors.black,
               ),
 
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
 
-              // Título
+              // ============================================================
+              //  BLOQUE 2 — Títulos y textos de bienvenida
+              // Cambien los textos, tamaños, colores y fuentes
+              // según el estilo de la app.
+              // ============================================================
               const Text(
                 'Bienvenido',
                 style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF1A1A2E),
-                  letterSpacing: -0.5,
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
 
               const SizedBox(height: 8),
 
-              // Subtítulo
               const Text(
-                'Inicia sesión con tu cuenta de Google\npara continuar',
+                'Inicia sesión para continuar',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 15,
-                  color: Color(0xFF6B7280),
-                  height: 1.5,
+                  fontSize: 14,
+                  color: Colors.black54,
                 ),
               ),
 
-              const Spacer(flex: 2),
+              const Spacer(),
 
-              // Botón de Google
-              GoogleSignInButton(onPressed: _handleGoogleSignIn),
+              // ============================================================
+              //  BLOQUE 3 — Botón de Google (NO TOCAR onPressed)
+              // Solo pueden cambiar el texto del label si quieren.
+              // El onPressed NO se toca — es la lógica de login.
+              // ============================================================
+              GoogleSignInButton(
+                onPressed: _handleGoogleSignIn, //  NO TOCAR
+                label: 'Continuar con Google',  //  Pueden cambiar el texto
+              ),
 
-              // Mensaje de error
+              // ============================================================
+              //  BLOQUE 4 — Mensaje de error (NO TOCAR)
+              // Este bloque muestra errores si el login falla.
+              // No mover ni modificar nada aquí.
+              // ============================================================
               if (_errorMessage != null) ...[
                 const SizedBox(height: 16),
                 Container(
@@ -125,17 +136,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ],
+              // ============================================================
 
-              const Spacer(),
+              const SizedBox(height: 24),
 
-              // Texto legal
+              // ============================================================
+              //  BLOQUE 5 — Texto legal
+              // Pueden cambiar el texto, estilo o quitarlo si no lo necesitan.
+              // ============================================================
               const Text(
-                'Al continuar, aceptas nuestros\nTérminos de servicio y Política de privacidad',
+                'Al continuar aceptas nuestros Términos y Política de privacidad',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFFADB5BD),
-                  height: 1.6,
+                  fontSize: 11,
+                  color: Colors.black38,
                 ),
               ),
 
