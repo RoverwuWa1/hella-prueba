@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_services.dart';
 import '../../features/auth/view/login_screen.dart';
-import '../../features/challenges/view/home_screen.dart'; // Cámbialo por tu pantalla principal
+import '../../core/widgets/bottom_navigation_bar.dart'; // Cámbialo por tu pantalla principal
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -30,7 +30,7 @@ class AuthGate extends StatelessWidget {
         }
 
         // ── Con sesión → Home ──────────────────────────────────────────────
-        return const HomeScreen();
+        return const MainScreen();
       },
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../data/services/auth_services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,217 +7,204 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
-    final AuthService authService = AuthService();
+    final String firstName = user?.displayName?.split(' ').first ?? 'Usuario';
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 32),
-
-              // ── Header ───────────────────────────────────────────────────
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: CustomScrollView(
+          slivers: [
+            // ── App Bar ────────────────────────────────────────────────────
+            SliverAppBar(
+              backgroundColor: const Color(0xFFF8F9FA),
+              floating: true,
+              elevation: 0,
+              scrolledUnderElevation: 0,
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Hola,',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: const Color(0xFF6B7280),
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        user?.displayName?.split(' ').first ?? 'Usuario',
-                        style: const TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF1A1A2E),
-                          letterSpacing: -0.5,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    _getGreeting(),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF6B7280),
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-
-                  // Avatar
-                  GestureDetector(
-                    onTap: () => _showProfileSheet(context, user, authService),
-                    child: CircleAvatar(
-                      radius: 26,
-                      backgroundColor: const Color(0xFF4285F4),
-                      backgroundImage: user?.photoURL != null
-                          ? NetworkImage(user!.photoURL!)
-                          : null,
-                      child: user?.photoURL == null
-                          ? Text(
-                              (user?.displayName?.isNotEmpty == true)
-                                  ? user!.displayName![0].toUpperCase()
-                                  : 'U',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                            )
-                          : null,
+                  Text(
+                    firstName,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF1A1A2E),
+                      letterSpacing: -0.3,
                     ),
                   ),
                 ],
               ),
-
-              const SizedBox(height: 32),
-
-              // ── Tarjeta de perfil ─────────────────────────────────────────
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 16,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: const Color(0xFF4285F4),
+                    backgroundImage: user?.photoURL != null
+                        ? NetworkImage(user!.photoURL!)
+                        : null,
+                    child: user?.photoURL == null
+                        ? Text(
+                            firstName[0].toUpperCase(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),
+                          )
+                        : null,
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Mi cuenta',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF6B7280),
-                        letterSpacing: 0.5,
+              ],
+            ),
+
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  const SizedBox(height: 8),
+
+                  // ── Banner principal ──────────────────────────────────────
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF4285F4), Color(0xFF1A73E8)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    const SizedBox(height: 16),
-                    _InfoRow(
-                      icon: Icons.person_outline_rounded,
-                      label: 'Nombre',
-                      value: user?.displayName ?? 'Sin nombre',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: const Text(
+                            '¡Bienvenido!',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        const Text(
+                          'Empieza a explorar\nla app',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            height: 1.3,
+                            letterSpacing: -0.3,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: const Color(0xFF4285F4),
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text(
+                            'Comenzar',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
                     ),
-                    const Divider(height: 24, color: Color(0xFFF0F0F0)),
-                    _InfoRow(
-                      icon: Icons.email_outlined,
-                      label: 'Correo',
-                      value: user?.email ?? 'Sin correo',
-                    ),
-                    const Divider(height: 24, color: Color(0xFFF0F0F0)),
-                    _InfoRow(
-                      icon: Icons.verified_outlined,
-                      label: 'Proveedor',
-                      value: 'Google',
-                      valueColor: const Color(0xFF4285F4),
-                    ),
-                  ],
-                ),
-              ),
+                  ),
 
-              const Spacer(),
+                  const SizedBox(height: 28),
 
-              // ── Botón cerrar sesión ───────────────────────────────────────
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: OutlinedButton.icon(
-                  onPressed: () => _confirmSignOut(context, authService),
-                  icon: const Icon(Icons.logout_rounded, size: 18),
-                  label: const Text(
-                    'Cerrar sesión',
+                  // ── Sección accesos rápidos ───────────────────────────────
+                  const Text(
+                    'Accesos rápidos',
                     style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF1A1A2E),
+                      letterSpacing: -0.2,
                     ),
                   ),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: const Color(0xFFE53935),
-                    side: const BorderSide(color: Color(0xFFFFCDD2)),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+
+                  const SizedBox(height: 14),
+
+                  GridView.count(
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    childAspectRatio: 1.4,
+                    children: const [
+                      _QuickCard(
+                        icon: Icons.explore_outlined,
+                        label: 'Explorar',
+                        color: Color(0xFF4285F4),
+                      ),
+                      _QuickCard(
+                        icon: Icons.bookmark_border_rounded,
+                        label: 'Guardados',
+                        color: Color(0xFF34A853),
+                      ),
+                      _QuickCard(
+                        icon: Icons.notifications_none_rounded,
+                        label: 'Notificaciones',
+                        color: Color(0xFFFBBC05),
+                      ),
+                      _QuickCard(
+                        icon: Icons.settings_outlined,
+                        label: 'Ajustes',
+                        color: Color(0xFFEA4335),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  // ── Sección recientes ─────────────────────────────────────
+                  const Text(
+                    'Recientes',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF1A1A2E),
+                      letterSpacing: -0.2,
                     ),
                   ),
-                ),
-              ),
 
-              const SizedBox(height: 24),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+                  const SizedBox(height: 14),
 
-  // ── Bottom sheet de perfil ──────────────────────────────────────────────
-  void _showProfileSheet(
-      BuildContext context, User? user, AuthService authService) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (_) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircleAvatar(
-              radius: 36,
-              backgroundColor: const Color(0xFF4285F4),
-              backgroundImage: user?.photoURL != null
-                  ? NetworkImage(user!.photoURL!)
-                  : null,
-              child: user?.photoURL == null
-                  ? Text(
-                      user?.displayName?[0].toUpperCase() ?? 'U',
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600),
-                    )
-                  : null,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              user?.displayName ?? 'Usuario',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF1A1A2E),
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              user?.email ?? '',
-              style: const TextStyle(
-                fontSize: 14,
-                color: Color(0xFF6B7280),
-              ),
-            ),
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton.icon(
-                onPressed: () {
-                  Navigator.pop(context);
-                  _confirmSignOut(context, authService);
-                },
-                icon: const Icon(Icons.logout_rounded,
-                    color: Color(0xFFE53935), size: 18),
-                label: const Text(
-                  'Cerrar sesión',
-                  style: TextStyle(color: Color(0xFFE53935)),
-                ),
+                  ...List.generate(3, (i) => _RecentItem(index: i)),
+
+                  const SizedBox(height: 24),
+                ]),
               ),
             ),
           ],
@@ -227,86 +213,135 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // ── Confirmación de cierre de sesión ────────────────────────────────────
-  void _confirmSignOut(BuildContext context, AuthService authService) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text(
-          'Cerrar sesión',
-          style: TextStyle(fontWeight: FontWeight.w700),
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Buenos días,';
+    if (hour < 18) return 'Buenas tardes,';
+    return 'Buenas noches,';
+  }
+}
+
+// ── Tarjeta de acceso rápido ────────────────────────────────────────────────
+class _QuickCard extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+
+  const _QuickCard({
+    required this.icon,
+    required this.label,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
-        content: const Text('¿Estás seguro que deseas salir?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar',
-                style: TextStyle(color: Color(0xFF6B7280))),
-          ),
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(context);
-              await authService.signOut();
-              // AuthGate redirige automáticamente a LoginScreen
-            },
-            child: const Text(
-              'Salir',
-              style: TextStyle(
-                color: Color(0xFFE53935),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(icon, color: color, size: 20),
+            ),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 13,
                 fontWeight: FontWeight.w600,
+                color: Color(0xFF1A1A2E),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-// ── Widget reutilizable de fila de info ─────────────────────────────────────
-class _InfoRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color? valueColor;
+// ── Item de recientes (placeholder) ────────────────────────────────────────
+class _RecentItem extends StatelessWidget {
+  final int index;
 
-  const _InfoRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-    this.valueColor,
-  });
+  const _RecentItem({required this.index});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 18, color: const Color(0xFF9CA3AF)),
-        const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 11,
-                color: Color(0xFF9CA3AF),
-                letterSpacing: 0.3,
-              ),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 42,
+            height: 42,
+            decoration: BoxDecoration(
+              color: const Color(0xFFF0F4FF),
+              borderRadius: BorderRadius.circular(10),
             ),
-            const SizedBox(height: 2),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: valueColor ?? const Color(0xFF1A1A2E),
-              ),
+            child: const Icon(
+              Icons.article_outlined,
+              color: Color(0xFF4285F4),
+              size: 20,
             ),
-          ],
-        ),
-      ],
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Elemento ${index + 1}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF1A1A2E),
+                  ),
+                ),
+                const SizedBox(height: 3),
+                const Text(
+                  'Descripción breve del elemento',
+                  style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
+                ),
+              ],
+            ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: Color(0xFF9CA3AF),
+            size: 20,
+          ),
+        ],
+      ),
     );
   }
 }
