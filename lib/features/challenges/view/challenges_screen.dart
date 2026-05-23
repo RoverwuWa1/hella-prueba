@@ -21,7 +21,7 @@ class ChallengesScreen extends StatelessWidget {
         elevation: 0,
       ),
 
-      body: Padding(
+      body: SingleChildScrollView(  //  NO TOCAR — evita el overflow
 
         //  DISEÑO: Espaciado general
         padding: const EdgeInsets.all(16),
@@ -48,7 +48,7 @@ class ChallengesScreen extends StatelessWidget {
 
             ListView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(), //  NO TOCAR
               itemCount: 3,           //  Cambien la cantidad de placeholders
               itemBuilder: (context, index) {
                 return const ListTile(
@@ -78,7 +78,7 @@ class ChallengesScreen extends StatelessWidget {
 
             ListView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(), //  NO TOCAR
               itemCount: 3,           //  Cambien la cantidad de placeholders
               itemBuilder: (context, index) {
                 return const ListTile(
