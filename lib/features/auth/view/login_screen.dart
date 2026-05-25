@@ -10,7 +10,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 // ============================================================
-// 🔒 NO TOCAR — Lógica de autenticación
+//  NO TOCAR — Lógica de autenticación
 // ============================================================
 class _LoginScreenState extends State<LoginScreen> {
   final AuthService _authService = AuthService();
@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // 🎨 DISEÑO: Color de fondo
+      //  DISEÑO: Color de fondo
       backgroundColor: const Color(0xFFF1FBF3),
 
       body: SingleChildScrollView(
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 95),
 
             // ============================================================
-            // 🎨 BLOQUE 1 — Ícono y nombre de la app
+            //  BLOQUE 1 — Ícono y nombre de la app
             // Cambien el ícono, color, tamaño y nombre de la app.
             // ============================================================
             Container(
@@ -59,33 +59,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   89,
                   171,
                   107,
-                ), // 🎨 Color del contenedor
-                borderRadius: BorderRadius.circular(20), // 🎨 Esquinas
+                ), //  Color del contenedor
+                borderRadius: BorderRadius.circular(20), //  Esquinas
               ),
               child: const Icon(
-                Icons.eco, // 🎨 Cambien el ícono
+                Icons.eco, //  Cambien el ícono
                 size: 45,
-                color: Color.fromARGB(255, 245, 247, 248), // 🎨 Color del ícono
+                color: Color.fromARGB(255, 245, 247, 248), //  Color del ícono
               ),
             ),
 
             const SizedBox(height: 10),
 
             const Text(
-              'Hella', // 🎨 Nombre de la app
+              'Hella', //  Nombre de la app
               style: TextStyle(
-                fontSize: 35, // 🎨 Tamaño
-                fontWeight: FontWeight.bold, // 🎨 Peso
+                fontSize: 35, //  Tamaño
+                fontWeight: FontWeight.bold, //  Peso
               ),
             ),
 
             const SizedBox(height: 10),
 
             const Text(
-              'Cuida el planeta, cambia tus hábitos', // 🎨 Subtítulo
+              'Cuida el planeta, cambia tus hábitos', //  Subtítulo
               style: TextStyle(
-                fontSize: 18, // 🎨 Tamaño
-                color: Colors.green, // 🎨 Color
+                fontSize: 18, //  Tamaño
+                color: Colors.green, //  Color
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -93,57 +93,68 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 60),
 
             // ============================================================
-            // 🎨 BLOQUE 2 — Contenedor blanco
+            //  BLOQUE 2 — Contenedor blanco
             // Cambien el tamaño, color, esquinas y padding.
             // ============================================================
             Container(
-              width: 400, // 🎨 Ancho
-              padding: const EdgeInsets.all(28.0), // 🎨 Espaciado interno
+              width: 400, //  Ancho
+              padding: const EdgeInsets.all(28.0), //  Espaciado interno
               decoration: BoxDecoration(
-                color: Colors.white, // 🎨 Color de fondo
-                borderRadius: BorderRadius.circular(20), // 🎨 Esquinas
+                color: Colors.white, //  Color de fondo
+                borderRadius: BorderRadius.circular(20), //  Esquinas
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // ============================================================
-                  // 🎨 BLOQUE 3 — Título del contenedor
+                  //  BLOQUE 3 — Título del contenedor
                   // Cambien el texto y estilo.
                   // ============================================================
                   const Text(
-                    'Iniciar sesión', // 🎨 Cambien el texto
+                    'Iniciar sesión', //  Cambien el texto
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 24, // 🎨 Tamaño
-                      fontWeight: FontWeight.bold, // 🎨 Peso
+                      fontSize: 24, //  Tamaño
+                      fontWeight: FontWeight.bold, //  Peso
                     ),
                   ),
 
                   const SizedBox(height: 8),
 
                   const Text(
-                    'Usa tu cuenta de Google para continuar', // 🎨 Cambien el texto
+                    'Usa tu cuenta de Google para continuar', //  Cambien el texto
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 13, // 🎨 Tamaño
-                      color: Colors.black54, // 🎨 Color
+                      fontSize: 13, //  Tamaño
+                      color: Colors.black54, //  Color
                     ),
                   ),
 
                   const SizedBox(height: 28),
 
                   // ============================================================
-                  // 🔒 BLOQUE 4 — Botón de Google (NO TOCAR onPressed)
+                  //  BLOQUE 4 — Botón de Google (NO TOCAR onPressed)
                   // Solo pueden cambiar el texto del label.
                   // El onPressed NO se toca — es la lógica de login.
                   // ============================================================
                   GoogleSignInButton(
-                    onPressed: _handleGoogleSignIn, // 🔒 NO TOCAR
-                    label: 'Continuar con Google', // 🎨 Pueden cambiar el texto
+                    onPressed: _handleGoogleSignIn, //  NO TOCAR
+                    label: 'Continuar con Google', //  Pueden cambiar el texto
                   ),
 
                   // ============================================================
-                  // 🔒 BLOQUE 5 — Mensaje de error (NO TOCAR)
+                  //  SOLO DESARROLLO — Quitar al ultimo de la app
+                  // ============================================================
+                  TextButton(
+                    onPressed: () async {
+                      await _authService.signInAnonymously();
+                    },
+                    child: const Text('Entrar como invitado (dev)'),
+                  ),
+                  // ============================================================
+
+                  // ============================================================
+                  //  BLOQUE 5 — Mensaje de error (NO TOCAR)
                   // Este bloque muestra errores si el login falla.
                   // No mover ni modificar nada aquí.
                   // ============================================================
@@ -185,15 +196,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 24),
 
                   // ============================================================
-                  // 🎨 BLOQUE 6 — Texto legal
+                  //  BLOQUE 6 — Texto legal
                   // Pueden cambiar el texto, estilo o quitarlo.
                   // ============================================================
                   const Text(
                     'Al continuar aceptas nuestros Términos y Política de privacidad',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 11, // 🎨 Tamaño
-                      color: Colors.black38, // 🎨 Color
+                      fontSize: 11, //  Tamaño
+                      color: Colors.black38, //  Color
                     ),
                   ),
                 ],

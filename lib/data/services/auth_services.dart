@@ -122,6 +122,14 @@ class AuthService {
       throw _handleAuthException(e);
     }
   }
+  // Inicio de sesión anónimo — solo para desarrollo
+  Future<UserCredential?> signInAnonymously() async {
+    try {
+      return await _auth.signInAnonymously();
+    } on FirebaseAuthException catch (e) {
+      throw _handleAuthException(e);
+    }
+  }
 
   // =================================================================
   //  CERRAR SESIÓN
