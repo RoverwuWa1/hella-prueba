@@ -10,7 +10,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 // ============================================================
-//  NO TOCAR — Lógica de autenticación
+// 🔒 NO TOCAR — Lógica de autenticación
 // ============================================================
 class _LoginScreenState extends State<LoginScreen> {
   final AuthService _authService = AuthService();
@@ -30,132 +30,178 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
-// ============================================================
+  // ============================================================
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 🎨 DISEÑO: Color de fondo
+      backgroundColor: const Color(0xFFF1FBF3),
 
-      //  DISEÑO: Cambia el color de fondo de la pantalla
-      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 95),
 
-      body: SafeArea(
-        child: Padding(
-
-          //  DISEÑO: Ajusta el espacio a los lados
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-
-          child: Column(
-            children: [
-
-              const Spacer(),
-
-              // ============================================================
-              //  BLOQUE 1 — Logo o imagen de la app
-              // Aquí va el logo, ícono o imagen principal de la app.
-              // Se puede cambiar el ícono, poner una imagen, cambiar
-              // el color o quitar el contenedor por completo.
-              // ============================================================
-              const Icon(
-                Icons.lock_outline_rounded,
-                size: 64,
-                color: Colors.black,
+            // ============================================================
+            // 🎨 BLOQUE 1 — Ícono y nombre de la app
+            // Cambien el ícono, color, tamaño y nombre de la app.
+            // ============================================================
+            Container(
+              width: 90,
+              height: 90,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(
+                  255,
+                  89,
+                  171,
+                  107,
+                ), // 🎨 Color del contenedor
+                borderRadius: BorderRadius.circular(20), // 🎨 Esquinas
               ),
-
-              const SizedBox(height: 24),
-
-              // ============================================================
-              //  BLOQUE 2 — Títulos y textos de bienvenida
-              // Cambien los textos, tamaños, colores y fuentes
-              // según el estilo de la app.
-              // ============================================================
-              const Text(
-                'Bienvenido',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+              child: const Icon(
+                Icons.eco, // 🎨 Cambien el ícono
+                size: 45,
+                color: Color.fromARGB(255, 245, 247, 248), // 🎨 Color del ícono
               ),
+            ),
 
-              const SizedBox(height: 8),
+            const SizedBox(height: 10),
 
-              const Text(
-                'Inicia sesión para continuar',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black54,
-                ),
+            const Text(
+              'Hella', // 🎨 Nombre de la app
+              style: TextStyle(
+                fontSize: 35, // 🎨 Tamaño
+                fontWeight: FontWeight.bold, // 🎨 Peso
               ),
+            ),
 
-              const Spacer(),
+            const SizedBox(height: 10),
 
-              // ============================================================
-              //  BLOQUE 3 — Botón de Google (NO TOCAR onPressed)
-              // Solo pueden cambiar el texto del label si quieren.
-              // El onPressed NO se toca — es la lógica de login.
-              // ============================================================
-              GoogleSignInButton(
-                onPressed: _handleGoogleSignIn, //  NO TOCAR
-                label: 'Continuar con Google',  //  Pueden cambiar el texto
+            const Text(
+              'Cuida el planeta, cambia tus hábitos', // 🎨 Subtítulo
+              style: TextStyle(
+                fontSize: 18, // 🎨 Tamaño
+                color: Colors.green, // 🎨 Color
+                fontWeight: FontWeight.bold,
               ),
+            ),
 
-              // ============================================================
-              //  BLOQUE 4 — Mensaje de error (NO TOCAR)
-              // Este bloque muestra errores si el login falla.
-              // No mover ni modificar nada aquí.
-              // ============================================================
-              if (_errorMessage != null) ...[
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
+            const SizedBox(height: 60),
+
+            // ============================================================
+            // 🎨 BLOQUE 2 — Contenedor blanco
+            // Cambien el tamaño, color, esquinas y padding.
+            // ============================================================
+            Container(
+              width: 400, // 🎨 Ancho
+              padding: const EdgeInsets.all(28.0), // 🎨 Espaciado interno
+              decoration: BoxDecoration(
+                color: Colors.white, // 🎨 Color de fondo
+                borderRadius: BorderRadius.circular(20), // 🎨 Esquinas
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // ============================================================
+                  // 🎨 BLOQUE 3 — Título del contenedor
+                  // Cambien el texto y estilo.
+                  // ============================================================
+                  const Text(
+                    'Iniciar sesión', // 🎨 Cambien el texto
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24, // 🎨 Tamaño
+                      fontWeight: FontWeight.bold, // 🎨 Peso
+                    ),
                   ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFEBEE),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: const Color(0xFFFFCDD2)),
+
+                  const SizedBox(height: 8),
+
+                  const Text(
+                    'Usa tu cuenta de Google para continuar', // 🎨 Cambien el texto
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 13, // 🎨 Tamaño
+                      color: Colors.black54, // 🎨 Color
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.error_outline,
-                          color: Color(0xFFE53935), size: 18),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          _errorMessage!,
-                          style: const TextStyle(
-                            color: Color(0xFFE53935),
-                            fontSize: 13,
-                          ),
-                        ),
+
+                  const SizedBox(height: 28),
+
+                  // ============================================================
+                  // 🔒 BLOQUE 4 — Botón de Google (NO TOCAR onPressed)
+                  // Solo pueden cambiar el texto del label.
+                  // El onPressed NO se toca — es la lógica de login.
+                  // ============================================================
+                  GoogleSignInButton(
+                    onPressed: _handleGoogleSignIn, // 🔒 NO TOCAR
+                    label: 'Continuar con Google', // 🎨 Pueden cambiar el texto
+                  ),
+
+                  // ============================================================
+                  // 🔒 BLOQUE 5 — Mensaje de error (NO TOCAR)
+                  // Este bloque muestra errores si el login falla.
+                  // No mover ni modificar nada aquí.
+                  // ============================================================
+                  if (_errorMessage != null) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
                       ),
-                    ],
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFEBEE),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: const Color(0xFFFFCDD2)),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.error_outline,
+                            color: Color(0xFFE53935),
+                            size: 18,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              _errorMessage!,
+                              style: const TextStyle(
+                                color: Color(0xFFE53935),
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+
+                  // ============================================================
+                  const SizedBox(height: 24),
+
+                  // ============================================================
+                  // 🎨 BLOQUE 6 — Texto legal
+                  // Pueden cambiar el texto, estilo o quitarlo.
+                  // ============================================================
+                  const Text(
+                    'Al continuar aceptas nuestros Términos y Política de privacidad',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 11, // 🎨 Tamaño
+                      color: Colors.black38, // 🎨 Color
+                    ),
                   ),
-                ),
-              ],
-              // ============================================================
-
-              const SizedBox(height: 24),
-
-              // ============================================================
-              //  BLOQUE 5 — Texto legal
-              // Pueden cambiar el texto, estilo o quitarlo si no lo necesitan.
-              // ============================================================
-              const Text(
-                'Al continuar aceptas nuestros Términos y Política de privacidad',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 11,
-                  color: Colors.black38,
-                ),
+                ],
               ),
+            ),
 
-              const SizedBox(height: 24),
-            ],
-          ),
+            const SizedBox(height: 32),
+          ],
         ),
       ),
     );
