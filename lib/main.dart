@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart'; // Configuración de Firebase generada automáticamente
 import 'data/modules/auth_gate.dart';   // Nuestro widget "guardián" de autenticación
+import 'core/teams/app_themes.dart';
 
 // =================================================================
 //  FUNCIÓN main()
@@ -52,10 +53,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Firebase Auth', // Título de la app
       debugShowCheckedModeBanner: false, // Oculta la cinta de "debug"
-      theme: ThemeData(
-        primarySwatch: Colors.blue, // Tema de color principal
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: AppTheme.theme,
       // ===============================================================
       //  PUNTO DE ENTRADA DE LA UI: AuthGate
       // ===============================================================
