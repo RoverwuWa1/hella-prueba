@@ -6,10 +6,6 @@ class TipsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      //  DISEÑO: Color de fondo
-      backgroundColor: Colors.white,
-
       // ============================================================
       //  BLOQUE 1 — AppBar
       // Cambien el título, color, íconos, lo que necesiten.

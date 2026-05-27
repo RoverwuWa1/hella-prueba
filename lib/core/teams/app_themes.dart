@@ -15,7 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 class AppColors {
   static const Color primary        = Color(0xFF00B477); //  Color principal
   static const Color primaryLight   = Color(0xFF00C381); //  Variante clara del principal
-  static const Color background     = Color.fromARGB(255, 226, 237, 214); //  Fondo de pantallas
+  static const Color background     = Color.fromARGB(255, 252, 255, 248); //  Fondo de pantallas
   static const Color surface        = Color(0xFFFFFFFF); //  Fondo de cards
   static const Color textPrimary    = Color(0xFF000000); //  Texto principal
   static const Color textSecondary  = Color(0xFF000000); //  Texto secundario
@@ -86,8 +86,8 @@ class AppTheme {
       backgroundColor: AppColors.surface,    //  Fondo de la barra
       indicatorColor: AppColors.primaryLight, //  Fondo del tab activo
       // Define el estilo de los íconos según su estado (seleccionado/no)
-      iconTheme: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      iconTheme: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           // Color del ícono CUANDO ESTÁ SELECCIONADO
           return const IconThemeData(color: AppColors.textPrimary);
         }
@@ -96,8 +96,8 @@ class AppTheme {
       }),
 
       // Define el estilo del texto según su estado (seleccionado/no)
-      labelTextStyle: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      labelTextStyle: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           // Estilo del texto CUANDO ESTÁ SELECCIONADO
           return const TextStyle(
             fontSize: 12,

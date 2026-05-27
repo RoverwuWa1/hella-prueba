@@ -21,9 +21,7 @@ class PerfilScreen extends StatelessWidget {
     // ============================================================
 
     return Scaffold(
-      //  DISEÑO: Color de fondo
-      backgroundColor: const Color(0xFFF8F9FA),
-
+      
       appBar: AppBar(
         title: const Text('Perfil de usuario'),    //  Cambien el título
       ),

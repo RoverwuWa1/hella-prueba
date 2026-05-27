@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../widgets/progres_tracker_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,9 +17,6 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
 
-      //  DISEÑO: Color de fondo
-      backgroundColor: Colors.white,
-
       // ============================================================
       //  BLOQUE 1 — AppBar
       // Pueden cambiar el título, color, agregar íconos, etc.
@@ -29,7 +27,7 @@ class HomeScreen extends StatelessWidget {
 
       body: Padding(
 
-        // 🎨 DISEÑO: Espaciado de la pantalla
+        //  DISEÑO: Espaciado de la pantalla
         padding: const EdgeInsets.all(16),
 
         child: Column(
@@ -41,6 +39,7 @@ class HomeScreen extends StatelessWidget {
             // Solo cambien los estilos. El texto firstName viene
             // de Firebase — no lo modifiquen.
             // ============================================================
+            
             Text(
               'Hola, $firstName',   //  NO TOCAR — nombre de Firebase
               style: const TextStyle(
@@ -57,6 +56,7 @@ class HomeScreen extends StatelessWidget {
             // Aquí va el contenido más importante de la app.
             // Pueden poner cards, imágenes, banners, lo que necesiten.
             // ============================================================
+
             const Text(
               'Sección principal',    //  Cambien este título
               style: TextStyle(
@@ -75,13 +75,17 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 24),
 
+            //Barra de seguimiento
+            const ProgressTracker(),
+            const SizedBox(height: 24), // Un espacio después de la barra
+
             // ============================================================
             //  BLOQUE 4 — Lista de contenido
             // Aquí va una lista, grid o lo que sea el core de la app.
             // Cambien el ícono, textos y colores de cada item.
             // ============================================================
             const Text(
-              'Lista de contenido',   //  Cambien este título
+              'Reto de hoy',   //  Cambien este título
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
