@@ -69,7 +69,7 @@ class AppTheme {
     //  Solo definan el title: en cada pantalla.
     // =============================================================
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.background, //  Fondo del AppBar
+      backgroundColor: AppColors.primary, //  Fondo del AppBar
       foregroundColor: AppColors.textPrimary, //  Color del texto e íconos
       elevation: 0,
       titleTextStyle: GoogleFonts.lato(
@@ -85,6 +85,33 @@ class AppTheme {
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: AppColors.surface,    //  Fondo de la barra
       indicatorColor: AppColors.primaryLight, //  Fondo del tab activo
+      // Define el estilo de los íconos según su estado (seleccionado/no)
+      iconTheme: MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          // Color del ícono CUANDO ESTÁ SELECCIONADO
+          return const IconThemeData(color: AppColors.textPrimary);
+        }
+        // Color del ícono CUANDO NO ESTÁ SELECCIONADO
+        return const IconThemeData(color: AppColors.primary);
+      }),
+
+      // Define el estilo del texto según su estado (seleccionado/no)
+      labelTextStyle: MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          // Estilo del texto CUANDO ESTÁ SELECCIONADO
+          return const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          );
+        }
+        // Estilo del texto CUANDO NO ESTÁ SELECCIONADO
+        return const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+          color: AppColors.primary,
+        );
+      }),
     ),
 
     // =============================================================

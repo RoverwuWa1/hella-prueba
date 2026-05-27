@@ -25,9 +25,6 @@ class HomeScreen extends StatelessWidget {
       // ============================================================
       appBar: AppBar(
         title: Text(_getGreeting()),  //  NO TOCAR — saludo dinámico
-        backgroundColor: Colors.white, //  Color del AppBar
-        foregroundColor: Colors.black, //  Color del texto e íconos
-        elevation: 0,                  //  Sombra (0 = sin sombra)
       ),
 
       body: Padding(

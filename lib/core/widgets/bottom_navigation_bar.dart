@@ -27,8 +27,6 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: NavigationBar(
-        backgroundColor: const Color.fromARGB(255, 42, 177, 62),      //  Color de fondo de la barra
-        indicatorColor: const Color.fromARGB(255, 187, 251, 189),   //  Color del indicador del tab activo
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
           setState(() => _currentIndex = index);

@@ -16,9 +16,6 @@ class ChallengesScreen extends StatelessWidget {
       // ============================================================
       appBar: AppBar(
         title: const Text('Retos'),    //  Cambien el título
-        backgroundColor: Colors.white, //  Color del AppBar
-        foregroundColor: Colors.black, //  Color del texto e íconos
-        elevation: 0,
       ),
 
       body: SingleChildScrollView(  //  NO TOCAR — evita el overflow
