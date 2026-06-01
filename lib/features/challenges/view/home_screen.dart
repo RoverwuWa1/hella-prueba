@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../widgets/banner_widget.dart';
 import '../widgets/progres_tracker_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -44,35 +45,13 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ============================================================
-            //  BLOQUE 2 — Saludo con nombre del usuario
-            // Solo cambien los estilos. El texto firstName viene
-            // de Firebase — no lo modifiquen.
+            //  BLOQUE 2 — Sección principal
+            // Aquí va el contenido de bienvenida de la app.
             // ============================================================
-            Text(
-              'Hola, $firstName', //  NO TOCAR — nombre de Firebase
-              style: const TextStyle(
-                fontSize: 22, //  Tamaño
-                fontWeight: FontWeight.bold, //  Peso
-                color: Colors.black, //  Color
-              ),
-            ),
-
-            const SizedBox(height: 24),
-
-            // ============================================================
-            //  BLOQUE 3 — Sección principal
-            // Aquí va el contenido más importante de la app.
-            // Pueden poner cards, imágenes, banners, lo que necesiten.
-            // ============================================================
-            const Text(
-              'Sección principal', //  Cambien este título
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-
             const SizedBox(height: 12),
 
-            //  Aquí va el contenido principal — reemplacen este Placeholder
-            const Placeholder(fallbackHeight: 160, color: Colors.black12),
+            //  Aquí va el banner_widget (el cuadro de color verde grande)
+            BannerWidget(firstName: firstName),
 
             const SizedBox(height: 24),
 
@@ -80,7 +59,7 @@ class HomeScreen extends StatelessWidget {
             const ProgressTracker(),
             const SizedBox(height: 24), // Un espacio después de la barra
             // ============================================================
-            //  BLOQUE 4 — Lista de contenido
+            //  BLOQUE 3 — Lista de contenido
             // Aquí va una lista, grid o lo que sea el core de la app.
             // Cambien el ícono, textos y colores de cada item.
             // ============================================================
