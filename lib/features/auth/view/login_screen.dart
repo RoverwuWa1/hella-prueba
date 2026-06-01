@@ -50,24 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             //  BLOQUE 1 — Ícono y nombre de la app
             // Cambien el ícono, color, tamaño y nombre de la app.
             // ============================================================
-            Container(
-              width: 90,
-              height: 90,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(
-                  255,
-                  89,
-                  171,
-                  107,
-                ), //  Color del contenedor
-                borderRadius: BorderRadius.circular(20), //  Esquinas
-              ),
-              child: const Icon(
-                Icons.eco, //  Cambien el ícono
-                size: 45,
-                color: Color.fromARGB(255, 245, 247, 248), //  Color del ícono
-              ),
-            ),
+            Image.asset('assets/images/logo22.png', width: 300),
 
             const SizedBox(height: 10),
 
@@ -85,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
               'Cuida el planeta, cambia tus hábitos', //  Subtítulo
               style: TextStyle(
                 fontSize: 18, //  Tamaño
-                color: Colors.green, //  Color
+                color: Color.fromRGBO(76, 175, 80, 1), //  Color
                 fontWeight: FontWeight.bold,
               ),
             ),

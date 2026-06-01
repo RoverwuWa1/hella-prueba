@@ -6,83 +6,114 @@ class ChallengesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       // ============================================================
       //  BLOQUE 1 — AppBar
       // Cambien el título, color, íconos, lo que necesiten.
       // ============================================================
       appBar: AppBar(
-        title: const Text('Retos'),    //  Cambien el título
+        //Forzamos a que el contenido NO se centre automáticamente
+        centerTitle: false,
+        title: Row(
+          //Alinea verticalmente el texto y la imagen al centro
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/logo2.png', width: 33),
+            //El SizedBox va en medio de los dos para separarlos un poco
+            const SizedBox(width: 10),
+            const Text('HELLA'), //  Cambien el título
+          ],
+        ),
       ),
 
-      body: SingleChildScrollView(  //  NO TOCAR — evita el overflow
-
-        //  DISEÑO: Espaciado general
-        padding: const EdgeInsets.all(16),
-
+      body: SingleChildScrollView(
+        // NO TOCAR – evita el overflow
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // ============================================================
-            //  BLOQUE 2 — Retos por cumplir
-            // Lista de retos que el usuario aún no ha completado.
-            // Cambien el ícono, textos, colores y forma de cada item.
-            // Los datos reales vendrán de Firestore — por ahora son placeholders.
-            // ============================================================
-            const Text(
-              'Por cumplir',          //  Cambien el título
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+            // ========================================================
+            // BLOQUE 1 - CONTENEDOR VERDE (Sin márgenes, toca los bordes)
+            // ========================================================
+            Container(
+              width: double.infinity,
+              color: const Color(
+                0xFF1B8544,
+              ), // Corregido el tono verde del diseño
+              padding: const EdgeInsets.symmetric(vertical: 40.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Retos Diarios',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Día 4 de 21 · 3 completados',
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
               ),
             ),
 
-            const SizedBox(height: 12),
+            // ========================================================
+            // BLOQUE 2 - CONTENIDO CON MARGEN (Todo lo demás va aquí dentro)
+            // ========================================================
+            Padding(
+              padding: const EdgeInsets.all(
+                16.0,
+              ), // El diseño "Espaciado general" ahora solo afecta a esto
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // --- SECCIÓN: POR CUMPLIR ---
+                  const Text(
+                    'Por cumplir',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 12),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return const ListTile(
+                        leading: Icon(Icons.radio_button_unchecked),
+                        title: Text('Reto por cumplir'),
+                        subtitle: Text('Descripción del reto'),
+                      );
+                    },
+                  ),
 
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(), //  NO TOCAR
-              itemCount: 3,           //  Cambien la cantidad de placeholders
-              itemBuilder: (context, index) {
-                return const ListTile(
-                  leading: Icon(Icons.radio_button_unchecked), //  Ícono de pendiente
-                  title: Text('Reto por cumplir'),             //  Nombre del reto
-                  subtitle: Text('Descripción del reto'),      //  Descripción
-                );
-              },
-            ),
+                  const SizedBox(height: 24),
 
-            const SizedBox(height: 24),
-
-            // ============================================================
-            //  BLOQUE 3 — Retos cumplidos
-            // Lista de retos que el usuario ya completó.
-            // Cambien el ícono, textos, colores y forma de cada item.
-            // ============================================================
-            const Text(
-              'Cumplidos',            //  Cambien el título
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+                  // --- SECCIÓN: CUMPLIDOS ---
+                  const Text(
+                    'Cumplidos',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 12),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return const ListTile(
+                        leading: Icon(Icons.check_circle_outline),
+                        title: Text('Reto cumplido'),
+                        subtitle: Text('Descripción del reto'),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
-
-            const SizedBox(height: 12),
-
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(), //  NO TOCAR
-              itemCount: 3,           //  Cambien la cantidad de placeholders
-              itemBuilder: (context, index) {
-                return const ListTile(
-                  leading: Icon(Icons.check_circle_outline), //  Ícono de cumplido
-                  title: Text('Reto cumplido'),              //  Nombre del reto
-                  subtitle: Text('Descripción del reto'),    //  Descripción
-                );
-              },
-            ),
-
           ],
         ),
       ),

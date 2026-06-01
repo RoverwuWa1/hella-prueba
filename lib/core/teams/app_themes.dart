@@ -13,13 +13,31 @@ import 'package:google_fonts/google_fonts.dart';
 //  color: AppColors.background
 // =================================================================
 class AppColors {
-  static const Color primary        = Color(0xFF00B477); //  Color principal
-  static const Color primaryLight   = Color(0xFF00C381); //  Variante clara del principal
-  static const Color background     = Color.fromARGB(255, 252, 255, 248); //  Fondo de pantallas
-  static const Color surface        = Color(0xFFFFFFFF); //  Fondo de cards
-  static const Color textPrimary    = Color(0xFF000000); //  Texto principal
-  static const Color textSecondary  = Color(0xFF000000); //  Texto secundario
-  static const Color error          = Color(0xFFE53935); //  NO TOCAR — errores
+  static const Color primary = Color.fromARGB(
+    255,
+    34,
+    197,
+    93,
+  ); //  Color principal
+  static const Color primaryLight = Color.fromARGB(
+    255,
+    23,
+    128,
+    62,
+  ); //  Variante clara del principal
+  static const Color background = Color.fromARGB(
+    255,
+    252,
+    255,
+    248,
+  ); //  Fondo de pantallas
+  static const Color surface = Color(0xFFFFFFFF); //  Fondo de cards
+  static const Color textPrimary = Color(0xFF000000); //  Texto principal
+  static const Color textBar = Color(
+    0xFFFEFDFD,
+  ); //  Texto en la barra e iconos barra inferior
+  static const Color textSecondary = Color(0xFF000000); //  Texto secundario
+  static const Color error = Color(0xFFE53935); //  NO TOCAR — errores
 }
 
 // =================================================================
@@ -37,7 +55,12 @@ class AppTheme {
   static ThemeData get theme => ThemeData(
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.primary, //  NO TOCAR — solo cambien AppColors.primary
+      seedColor: const Color.from(
+        alpha: 1,
+        red: 0.133,
+        green: 0.773,
+        blue: 0.365,
+      ), //  NO TOCAR — solo cambien AppColors.primary
     ),
 
     scaffoldBackgroundColor: AppColors.background,
@@ -53,13 +76,35 @@ class AppTheme {
     //  style: Theme.of(context).textTheme.bodyMedium
     // =============================================================
     textTheme: TextTheme(
-      headlineLarge:  GoogleFonts.lato(fontSize: 22, fontWeight: FontWeight.bold,  color: AppColors.textPrimary),
-      headlineMedium: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.bold,  color: AppColors.textPrimary),
-      headlineSmall:  GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.w600,  color: AppColors.textPrimary),
-      bodyLarge:      GoogleFonts.nunito(fontSize: 16, color: AppColors.textPrimary),
-      bodyMedium:     GoogleFonts.nunito(fontSize: 14, color: AppColors.textPrimary),
-      bodySmall:      GoogleFonts.nunito(fontSize: 12, color: AppColors.textSecondary),
-      labelLarge:     GoogleFonts.nunito(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+      headlineLarge: GoogleFonts.lato(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: AppColors.textPrimary,
+      ),
+      headlineMedium: GoogleFonts.lato(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: AppColors.textPrimary,
+      ),
+      headlineSmall: GoogleFonts.lato(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+      ),
+      bodyLarge: GoogleFonts.nunito(fontSize: 16, color: AppColors.textPrimary),
+      bodyMedium: GoogleFonts.nunito(
+        fontSize: 14,
+        color: AppColors.textPrimary,
+      ),
+      bodySmall: GoogleFonts.nunito(
+        fontSize: 12,
+        color: AppColors.textSecondary,
+      ),
+      labelLarge: GoogleFonts.nunito(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+      ),
     ),
 
     // =============================================================
@@ -69,13 +114,18 @@ class AppTheme {
     //  Solo definan el title: en cada pantalla.
     // =============================================================
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.primary, //  Fondo del AppBar
+      backgroundColor: const Color.fromARGB(
+        255,
+        23,
+        128,
+        62,
+      ), //  Fondo del AppBar
       foregroundColor: AppColors.textPrimary, //  Color del texto e íconos
       elevation: 0,
       titleTextStyle: GoogleFonts.lato(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: AppColors.textPrimary,
+        color: AppColors.textBar,
       ),
     ),
 
@@ -83,16 +133,16 @@ class AppTheme {
     //  BARRA DE NAVEGACIÓN INFERIOR
     // =============================================================
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: AppColors.surface,    //  Fondo de la barra
+      backgroundColor: AppColors.surface, //  Fondo de la barra
       indicatorColor: AppColors.primaryLight, //  Fondo del tab activo
       // Define el estilo de los íconos según su estado (seleccionado/no)
       iconTheme: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
           // Color del ícono CUANDO ESTÁ SELECCIONADO
-          return const IconThemeData(color: AppColors.textPrimary);
+          return const IconThemeData(color: AppColors.textBar);
         }
         // Color del ícono CUANDO NO ESTÁ SELECCIONADO
-        return const IconThemeData(color: AppColors.primary);
+        return const IconThemeData(color: AppColors.primaryLight);
       }),
 
       // Define el estilo del texto según su estado (seleccionado/no)
@@ -109,7 +159,7 @@ class AppTheme {
         return const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w500,
-          color: AppColors.primary,
+          color: AppColors.primaryLight,
         );
       }),
     ),
@@ -122,14 +172,13 @@ class AppTheme {
     // =============================================================
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,  //  Color de fondo
-        foregroundColor: Colors.white,        //  Color del texto
+        backgroundColor: AppColors.primary, //  Color de fondo
+        foregroundColor: Colors.white, //  Color del texto
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12), //  Esquinas
         ),
       ),
     ),
-
   );
 }

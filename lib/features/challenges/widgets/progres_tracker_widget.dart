@@ -14,7 +14,8 @@ class _ProgressTrackerState extends State<ProgressTracker> {
   //  Aquí guardamos el valor actual y el total.
   //  Por ahora, el valor actual es fijo, pero está listo para cambiar.
   // =================================================================
-  final int _contadorActual = 7; // <- CAMBIA ESTE NÚMERO PARA PROBAR (de 0 a 21)
+  final int _contadorActual =
+      7; // <- CAMBIA ESTE NÚMERO PARA PROBAR (de 0 a 21)
   final int _contadorTotal = 21;
 
   @override
@@ -88,7 +89,9 @@ class _ProgressTrackerState extends State<ProgressTracker> {
               LayoutBuilder(
                 builder: (context, constraints) => Container(
                   height: 10,
-                  width: constraints.maxWidth * progreso, // Ancho proporcional al progreso
+                  width:
+                      constraints.maxWidth *
+                      progreso, // Ancho proporcional al progreso
                   decoration: BoxDecoration(
                     color: AppColors.primary, // Color de la barra (verde)
                     borderRadius: BorderRadius.circular(10),
