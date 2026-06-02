@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             //  BLOQUE 1 — Ícono y nombre de la app
             // Cambien el ícono, color, tamaño y nombre de la app.
             // ============================================================
-            Image.asset('assets/images/logo22.png', width: 300),
+            Image.asset('assets/images/logo1.png', width: 300),
 
             const SizedBox(height: 10),
 
