@@ -35,7 +35,13 @@ class AppColors {
   static const Color textPrimary = Color(0xFF000000); //  Texto principal
   static const Color textBar = Color(
     0xFFFEFDFD,
-  ); //  Texto en la barra e iconos barra inferior
+  ); //Blanco para texto en barra superior
+  static const Color grayText = Color.fromARGB(
+    255,
+    109,
+    108,
+    108,
+  ); //  Texto gris para descripciones o labels
   static const Color textSecondary = Color(0xFF000000); //  Texto secundario
   static const Color error = Color(0xFFE53935); //  NO TOCAR — errores
 }
@@ -77,9 +83,9 @@ class AppTheme {
     // =============================================================
     textTheme: TextTheme(
       headlineLarge: GoogleFonts.lato(
-        fontSize: 22,
+        fontSize: 25,
         fontWeight: FontWeight.bold,
-        color: AppColors.textPrimary,
+        color: AppColors.textBar,
       ),
       headlineMedium: GoogleFonts.lato(
         fontSize: 20,
@@ -91,7 +97,7 @@ class AppTheme {
         fontWeight: FontWeight.w600,
         color: AppColors.textPrimary,
       ),
-      bodyLarge: GoogleFonts.nunito(fontSize: 16, color: AppColors.textPrimary),
+      bodyLarge: GoogleFonts.nunito(fontSize: 16, color: AppColors.grayText),
       bodyMedium: GoogleFonts.nunito(
         fontSize: 14,
         color: AppColors.textPrimary,
