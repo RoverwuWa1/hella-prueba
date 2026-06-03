@@ -3,10 +3,10 @@
 // de la app y se consulte
 //=================================================================
 
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../data/services/auth_services.dart';
+import '../../../core/teams/app_themes.dart';
 
 class PerfilScreen extends StatelessWidget {
   const PerfilScreen({super.key});
@@ -21,9 +21,22 @@ class PerfilScreen extends StatelessWidget {
     // ============================================================
 
     return Scaffold(
-      
+      backgroundColor: const Color(0xFFF5F7FB),
+
       appBar: AppBar(
-        title: const Text('Perfil de usuario'),    //  Cambien el título
+        backgroundColor: AppColors.background, // mismo color que el fondo
+
+        elevation: 0, // elimina la sombra inferior
+
+        centerTitle: true, // centra el título
+
+        title: Text(
+          'Mi Perfil',
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            color: AppColors.primaryLight,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
 
       body: SafeArea(
@@ -41,56 +54,134 @@ class PerfilScreen extends StatelessWidget {
               // estilo del nombre y del correo.
               // Los datos (foto, nombre, correo) vienen de Firebase — no tocar.
               // ============================================================
-              Center(
+              // ============================================================
+              // NUEVO DISEÑO DEL PERFIL
+              // Tarjeta superior con degradado morado-azul
+              // Inspirada en el mockup generado
+              // ============================================================
+              Container(
+                width: double.infinity,
+
+                // Espacio interno de la tarjeta
+                padding: const EdgeInsets.symmetric(
+                  vertical: 28,
+                  horizontal: 20,
+                ),
+
+                decoration: BoxDecoration(
+                  // Bordes redondeados
+                  borderRadius: BorderRadius.circular(24),
+
+                  // Fondo degradado
+                  gradient: const LinearGradient(
+                    colors: [AppColors.primaryLight, AppColors.primary],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+
+                  // Sombra suave
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 20,
+                      offset: Offset(0, 8),
+                    ),
+                  ],
+                ),
+
                 child: Column(
                   children: [
+                    // ========================================================
+                    // FOTO DE PERFIL
+                    // ========================================================
                     CircleAvatar(
-                      radius: 44, //  Tamaño del avatar
-                      backgroundColor: const Color(
-                        0xFF4285F4,
-                      ), //  Color de fondo del avatar
-                      backgroundImage:
-                          user?.photoURL !=
-                              null //  NO TOCAR
+                      radius: 52,
+
+                      // Fondo blanco alrededor de la foto
+                      backgroundColor: Colors.white,
+
+                      backgroundImage: user?.photoURL != null
                           ? NetworkImage(user!.photoURL!)
                           : null,
-                      child:
-                          user?.photoURL ==
-                              null //  NO TOCAR
+
+                      child: user?.photoURL == null
                           ? Text(
                               user?.displayName?[0].toUpperCase() ?? 'U',
+
                               style: const TextStyle(
-                                color: Colors.white, //  Color de la inicial
-                                fontSize: 28, //  Tamaño de la inicial
-                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF4F46E5),
+                                fontSize: 34,
+                                fontWeight: FontWeight.bold,
                               ),
                             )
                           : null,
                     ),
-                    const SizedBox(height: 14),
+
+                    const SizedBox(height: 16),
+
+                    // ========================================================
+                    // NOMBRE
+                    // ========================================================
                     Text(
-                      user?.displayName ?? 'Usuario', //  NO TOCAR
+                      user?.displayName ?? 'Usuario',
+
                       style: const TextStyle(
-                        fontSize: 20, //  Tamaño del nombre
-                        fontWeight: FontWeight.w700, //  Peso del nombre
-                        color: Color(0xFF1A1A2E), //  Color del nombre
-                        letterSpacing: -0.3,
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 4),
+
+                    const SizedBox(height: 6),
+
+                    // ========================================================
+                    // CORREO
+                    // ========================================================
                     Text(
-                      user?.email ?? '', //  NO TOCAR
+                      user?.email ?? '',
+
                       style: const TextStyle(
-                        fontSize: 14, //  Tamaño del correo
-                        color: Color(0xFF6B7280), //  Color del correo
+                        color: Colors.white70,
+                        fontSize: 14,
+                      ),
+                    ),
+
+                    const SizedBox(height: 14),
+
+                    // ========================================================
+                    // CHIP GOOGLE
+                    // ========================================================
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
+
+                      decoration: BoxDecoration(
+                        color: Colors.white24,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.verified, color: Colors.white, size: 18),
+
+                          SizedBox(width: 6),
+
+                          Text(
+                            'Google',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-
-              const SizedBox(height: 32),
-
               // ============================================================
               //  BLOQUE 2 — Tarjeta "Mi cuenta"
               // Muestra nombre, correo y proveedor del usuario.
@@ -114,7 +205,7 @@ class PerfilScreen extends StatelessWidget {
                     icon: Icons.verified_outlined, //  Cambien el ícono
                     label: 'Proveedor', //  Cambien la etiqueta
                     value: 'Google', //  NO TOCAR
-                    valueColor: const Color(0xFF4285F4), //  Color del valor
+                    valueColor: AppColors.primary, //  Color del valor
                   ),
                 ],
               ),
@@ -249,7 +340,7 @@ class _SectionCard extends StatelessWidget {
           style: const TextStyle(
             fontSize: 13, //  Tamaño del título de sección
             fontWeight: FontWeight.w600,
-            color: Color(0xFF6B7280), //  Color del título de sección
+            color: AppColors.primaryLight, //  Color del título de sección
             letterSpacing: 0.5,
           ),
         ),
@@ -257,16 +348,14 @@ class _SectionCard extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: Colors.white, //  Color de fondo de la tarjeta
-            borderRadius: BorderRadius.circular(
-              14,
-            ), //  Esquinas de la tarjeta
+            borderRadius: BorderRadius.circular(22), //  Esquinas de la tarjeta
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(
                   alpha: 0.04,
                 ), //  Color de la sombra
-                blurRadius: 10, //  Intensidad de la sombra
-                offset: const Offset(0, 2),
+                blurRadius: 20, //  Intensidad de la sombra
+                offset: const Offset(0, 6),
               ),
             ],
           ),
@@ -320,11 +409,14 @@ class _InfoTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Row(
         children: [
-          Icon(
-            icon,
-            size: 20,
-            color: const Color(0xFF9CA3AF),
-          ), //  Color del ícono
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.background,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, size: 18, color: AppColors.primaryLight),
+          ),
           const SizedBox(width: 14),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,8 +436,7 @@ class _InfoTile extends StatelessWidget {
                   fontSize: 14, //  Tamaño del valor
                   fontWeight: FontWeight.w500,
                   color:
-                      valueColor ??
-                      const Color(0xFF1A1A2E), //  Color del valor
+                      valueColor ?? const Color(0xFF1A1A2E), //  Color del valor
                 ),
               ),
             ],
@@ -381,11 +472,14 @@ class _ActionTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(
           children: [
-            Icon(
-              icon,
-              size: 20,
-              color: const Color(0xFF9CA3AF),
-            ), //  Color del ícono
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: AppColors.background,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, size: 18, color: AppColors.primaryLight),
+            ),
             const SizedBox(width: 14),
             Expanded(
               child: Text(
