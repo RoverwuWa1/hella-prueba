@@ -3,55 +3,147 @@ import '../modules/challenge_module.dart';
 
 // ============================================================
 //  NO TOCAR — Servicio de retos
-// Maneja toda la comunicación con Firestore:
-// - Obtener los 21 retos con el progreso del usuario
-// - Marcar un reto como completado
 // ============================================================
 class ChallengesService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // ============================================================
   //  NO TOCAR — Obtiene los 21 retos combinados con el progreso
-  // del usuario. Devuelve cada reto con su estado completado/pendiente.
-  //
-  // Uso en ChallengesScreen:
-  // final retos = await _service.getChallengesConProgreso(uid);
+  // del usuario. Calcula cuál es el siguiente reto disponible
+  // según la regla de las 6:00 AM.
   // ============================================================
   Future<List<ChallengeModel>> getChallengesConProgreso(String uid) async {
     try {
-      // 1. Trae los 21 retos de la colección challenges
       final retosSnapshot = await _firestore
           .collection('challenges')
           .orderBy('dia')
           .get();
 
-      // 2. Trae el progreso del usuario
       final progresoSnapshot = await _firestore
           .collection('usuarios')
           .doc(uid)
           .collection('progreso')
           .get();
 
-      // 3. Convierte el progreso en un mapa para búsqueda rápida
-      final progresoMap = {for (var doc in progresoSnapshot.docs) doc.id: true};
+      final progresoMap = {
+        for (var doc in progresoSnapshot.docs)
+          doc.id: (doc.data()['fechaCompletado'] as Timestamp?)?.toDate(),
+      };
 
-      // 4. Combina los retos con el progreso del usuario
-      return retosSnapshot.docs.map((doc) {
+      DateTime? ultimaFechaCompletado;
+      for (var doc in progresoSnapshot.docs) {
+        final fecha = (doc.data()['fechaCompletado'] as Timestamp?)?.toDate();
+        if (fecha != null) {
+          if (ultimaFechaCompletado == null ||
+              fecha.isAfter(ultimaFechaCompletado)) {
+            ultimaFechaCompletado = fecha;
+          }
+        }
+      }
+
+      final bool siguienteDisponible = _esSiguienteDisponible(
+        ultimaFechaCompletado,
+      );
+      final retosCompletados = progresoMap.length;
+
+      final List<ChallengeModel> retos = [];
+      for (int i = 0; i < retosSnapshot.docs.length; i++) {
+        final doc = retosSnapshot.docs[i];
         final completado = progresoMap.containsKey(doc.id);
-        return ChallengeModel.fromFirestore(doc, completado: completado);
-      }).toList();
+        final esSiguiente = i == retosCompletados;
+        final activo = esSiguiente && siguienteDisponible;
+
+        retos.add(
+          ChallengeModel.fromFirestore(
+            doc,
+            completado: completado,
+            activo: activo,
+          ),
+        );
+      }
+
+      return retos;
     } catch (e) {
       throw 'Error al obtener los retos: $e';
     }
   }
 
   // ============================================================
-  //  NO TOCAR — Marca un reto como completado en Firestore
-  // Guarda el reto en usuarios/{uid}/progreso/{idReto}
-  // Cada reto vale 1 punto — el progreso es retosCompletados/21
+  //  NO TOCAR — Calcula si el siguiente reto está disponible
+  // ============================================================
+  bool _esSiguienteDisponible(DateTime? ultimaFechaCompletado) {
+    if (ultimaFechaCompletado == null) return true;
+    final ahora = DateTime.now();
+    final diaSiguiente = DateTime(
+      ultimaFechaCompletado.year,
+      ultimaFechaCompletado.month,
+      ultimaFechaCompletado.day + 1,
+      6,
+      0,
+      0,
+    );
+    return ahora.isAfter(diaSiguiente);
+  }
+
+  // ============================================================
+  //  NO TOCAR — Calcula cuándo se desbloquea el siguiente reto
+  // Devuelve null si ya está disponible o no hay retos completados.
+  // Devuelve la fecha de desbloqueo si todavía está bloqueado.
   //
-  // Uso:
-  // await _service.completarReto(uid, reto.id);
+  // Uso en ChallengesScreen:
+  // final fechaDesbloqueo = _service.getFechaDesbloqueo(ultimaFecha);
+  // Si es null → ya disponible
+  // Si no es null → mostrar el banner con esa fecha
+  // ============================================================
+  DateTime? getFechaDesbloqueo(DateTime? ultimaFechaCompletado) {
+    if (ultimaFechaCompletado == null) return null;
+
+    final diaSiguiente = DateTime(
+      ultimaFechaCompletado.year,
+      ultimaFechaCompletado.month,
+      ultimaFechaCompletado.day + 1,
+      6,
+      0,
+      0,
+    );
+
+    // Si ya pasó la hora de desbloqueo → no hay banner
+    if (DateTime.now().isAfter(diaSiguiente)) return null;
+
+    // Si todavía no pasa → devuelve la fecha para mostrar en el banner
+    return diaSiguiente;
+  }
+
+  // ============================================================
+  //  NO TOCAR — Obtiene la fecha del último reto completado
+  //
+  // Uso en ChallengesScreen:
+  // final ultima = await _service.getUltimaFechaCompletado(uid);
+  // final fechaDesbloqueo = _service.getFechaDesbloqueo(ultima);
+  // ============================================================
+  Future<DateTime?> getUltimaFechaCompletado(String uid) async {
+    try {
+      final snapshot = await _firestore
+          .collection('usuarios')
+          .doc(uid)
+          .collection('progreso')
+          .orderBy('fechaCompletado', descending: true)
+          .limit(1)
+          .get();
+
+      if (snapshot.docs.isEmpty) return null;
+
+      final fecha =
+          (snapshot.docs.first.data()['fechaCompletado'] as Timestamp?)
+              ?.toDate();
+      return fecha;
+    } catch (e) {
+      throw 'Error al obtener la última fecha: $e';
+    }
+  }
+
+  // ============================================================
+  //  NO TOCAR — Marca un reto como completado en Firestore
   // ============================================================
   Future<void> completarReto(String uid, String idReto) async {
     try {
@@ -70,12 +162,8 @@ class ChallengesService {
   }
 
   // ============================================================
-  //  NO TOCAR — Obtiene el progreso total del usuario
-  // Devuelve cuántos retos ha completado (0-21)
-  //
-  // Uso para la barra de progreso:
-  // final completados = await _service.getProgreso(uid);
-  // double progreso = completados / 21;
+  //  NO TOCAR — Obtiene el número de retos completados (0-21)
+  // Uso para la barra de progreso: completados / 21
   // ============================================================
   Future<int> getProgreso(String uid) async {
     try {
@@ -84,8 +172,7 @@ class ChallengesService {
           .doc(uid)
           .collection('progreso')
           .get();
-
-      return snapshot.docs.length; // número de retos completados
+      return snapshot.docs.length;
     } catch (e) {
       throw 'Error al obtener el progreso: $e';
     }

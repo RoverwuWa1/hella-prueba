@@ -2,16 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ============================================================
 //  NO TOCAR — Modelo de datos de un Reto
-// Esta clase define la estructura de un reto tal como
-// viene de Firestore combinado con el progreso del usuario.
 // ============================================================
 class ChallengeModel {
-  final String id; //  ID del documento en Firestore
+  final String id;
   final int dia;
   final int puntos;
   final String titulo;
   final String descripcion;
-  final bool completado; //  Viene del progreso del usuario
+  final bool completado;
+  final bool activo; //  true = botón disponible, false = bloqueado
 
   const ChallengeModel({
     required this.id,
@@ -19,17 +18,17 @@ class ChallengeModel {
     required this.puntos,
     required this.titulo,
     required this.descripcion,
-    this.completado = false, //  Por defecto no completado
+    this.completado = false,
+    this.activo = false, //  por defecto bloqueado
   });
 
   // ============================================================
   //  NO TOCAR — Convierte un documento de Firestore a ChallengeModel
-  // El campo completado se pasa por separado desde el progreso
-  // del usuario — no viene del documento del reto.
   // ============================================================
   factory ChallengeModel.fromFirestore(
     DocumentSnapshot doc, {
     bool completado = false,
+    bool activo = false,
   }) {
     final data = doc.data() as Map<String, dynamic>;
     return ChallengeModel(
@@ -39,14 +38,14 @@ class ChallengeModel {
       titulo: data['titulo'] as String,
       descripcion: data['descripcion'] as String,
       completado: completado,
+      activo: activo,
     );
   }
 
   // ============================================================
-  //  NO TOCAR — Crea una copia del modelo con completado cambiado
-  // Se usa para actualizar el estado sin modificar el original.
+  //  NO TOCAR — Crea una copia con campos modificados
   // ============================================================
-  ChallengeModel copyWith({bool? completado}) {
+  ChallengeModel copyWith({bool? completado, bool? activo}) {
     return ChallengeModel(
       id: id,
       dia: dia,
@@ -54,6 +53,7 @@ class ChallengeModel {
       titulo: titulo,
       descripcion: descripcion,
       completado: completado ?? this.completado,
+      activo: activo ?? this.activo,
     );
   }
 
@@ -71,6 +71,6 @@ class ChallengeModel {
 
   @override
   String toString() {
-    return 'ChallengeModel(id: $id, dia: $dia, titulo: $titulo, completado: $completado)';
+    return 'ChallengeModel(id: $id, dia: $dia, titulo: $titulo, completado: $completado, activo: $activo)';
   }
 }
