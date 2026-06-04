@@ -24,18 +24,14 @@ class PerfilScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF5F7FB),
 
       appBar: AppBar(
-        backgroundColor: AppColors.background, // mismo color que el fondo
-
-        elevation: 0, // elimina la sombra inferior
-
-        centerTitle: true, // centra el título
-
-        title: Text(
-          'Mi Perfil',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            color: AppColors.primaryLight,
-            fontWeight: FontWeight.bold,
-          ),
+        centerTitle: false,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/logo2.png', width: 33),
+            const SizedBox(width: 10),
+            const Text('HELLA'), //  Cambien el título
+          ],
         ),
       ),
 
@@ -56,8 +52,8 @@ class PerfilScreen extends StatelessWidget {
               // ============================================================
               // ============================================================
               // NUEVO DISEÑO DEL PERFIL
-              // Tarjeta superior con degradado morado-azul
-              // Inspirada en el mockup generado
+              // Tarjeta superior con degradado
+              //
               // ============================================================
               Container(
                 width: double.infinity,

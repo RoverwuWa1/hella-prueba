@@ -125,7 +125,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> {
           children: [
             Image.asset('assets/images/logo2.png', width: 33),
             const SizedBox(width: 10),
-            const Text('HELLA'), //  Cambien el título
+            const Text('HELLA'),
           ],
         ),
       ),
@@ -158,10 +158,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> {
                   gradient: const LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(255, 25, 190, 89),
-                      Color(0xFF166D37),
-                    ],
+                    colors: [Color(0xFF19BE59), Color(0xFF166D37)],
                   ),
                 ),
                 child: Column(
@@ -313,4 +310,3 @@ class _ChallengesScreenState extends State<ChallengesScreen> {
     );
   }
 }
-

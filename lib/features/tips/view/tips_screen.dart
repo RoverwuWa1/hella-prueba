@@ -11,24 +11,30 @@ class TipsScreen extends StatelessWidget {
       // Cambien el título, color, íconos, lo que necesiten.
       // ============================================================
       appBar: AppBar(
-        title: const Text('Tips'),     //  Cambien el título
+        centerTitle: false,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/logo2.png', width: 33),
+            const SizedBox(width: 10),
+            const Text('HELLA'), //  Cambien el título
+          ],
+        ),
       ),
 
       body: Padding(
-
         //  DISEÑO: Espaciado general
         padding: const EdgeInsets.all(16),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // ============================================================
             //  BLOQUE 2 — Título de la sección
             // Cambien el texto y estilo según la app.
             // ============================================================
             const Text(
-              'Sección informativa',  //  Cambien el título
+              'Sección informativa', //  Cambien el título
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -60,28 +66,24 @@ class TipsScreen extends StatelessWidget {
             // Los datos reales vendrán de Firestore — por ahora son placeholders.
             // ============================================================
             const Text(
-              'Contenido',            //  Cambien este título
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              'Contenido', //  Cambien este título
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 12),
 
             Expanded(
               child: ListView.builder(
-                itemCount: 3,         //  Cambien la cantidad
+                itemCount: 3, //  Cambien la cantidad
                 itemBuilder: (context, index) {
                   return const ListTile(
                     leading: Icon(Icons.info_outline), //  Cambien el ícono
-                    title: Text('Tip'),                //  Cambien el texto
-                    subtitle: Text('Descripción'),     //  Cambien la descripción
+                    title: Text('Tip'), //  Cambien el texto
+                    subtitle: Text('Descripción'), //  Cambien la descripción
                   );
                 },
               ),
             ),
-
           ],
         ),
       ),

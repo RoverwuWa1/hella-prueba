@@ -20,23 +20,7 @@ class BannerWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 180, //  Alto del banner
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24), //  Esquinas
-        // ============================================================
-        //  DEGRADADO — Cambien los colores para personalizar
-        // ============================================================
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF00E497), //  Verde claro — esquina superior izquierda
-            Color(0xFF00C381), //  Verde medio
-            Color(0xFF00B477), //  Verde medio oscuro
-            Color(0xFF009960), //  Verde oscuro — esquina inferior derecha
-          ],
-          stops: [0.0, 0.35, 0.65, 1.6],
-        ),
-      ),
+
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24),
         child: Stack(
@@ -51,14 +35,14 @@ class BannerWidget extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                height: 100,
+                height: 182,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                     colors: [
-                      Color(0x2EFFFFFF), // brillo suave arriba
-                      Color(0x00FFFFFF), // desvanece
+                      Color(0xFF19BE59),
+                      Color(0xFF166D37), // desvanece
                     ],
                   ),
                 ),
