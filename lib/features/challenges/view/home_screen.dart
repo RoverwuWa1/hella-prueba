@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/banner_widget.dart';
 import '../widgets/progres_tracker_widget.dart';
+import '../../../data/services/challenges_services.dart';
+import '../../../data/modules/challenge_module.dart';
+import '../widgets/cuadro_retos.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ChallengesService _service = ChallengesService();
+
     // ============================================================
     //  NO TOCAR — Datos del usuario desde Firebase
     // ============================================================
@@ -71,13 +76,38 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 12),
 
             Expanded(
-              child: ListView.builder(
-                itemCount: 3, //  Cambien la cantidad
-                itemBuilder: (context, index) {
-                  return const ListTile(
-                    leading: Icon(Icons.circle_outlined), //  Cambien el ícono
-                    title: Text('Item'), //  Cambien el texto
-                    subtitle: Text('Descripción'), //  Cambien la descripción
+              child: FutureBuilder(
+                future: _service.getChallengesConProgreso(user!.uid),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final retos = snapshot.data as List<ChallengeModel>;
+
+                  // 🔥 SOLO los que NO están completados
+                  final pendientes = retos.where((r) => !r.completado).toList();
+
+                  // 🎉 Si ya terminó todos
+                  if (pendientes.isEmpty) {
+                    return const Center(
+                      child: Text("🎉 Ya completaste todos los retos"),
+                    );
+                  }
+
+                  //  RETO ACTUAL (el primero pendiente)
+                  final retoActual = pendientes.first;
+
+                  return TarjetaReto(
+                    reto: retoActual,
+                    onCompletar: retoActual.activo
+                        ? () async {
+                            await _service.completarReto(
+                              user.uid,
+                              retoActual.id,
+                            );
+                          }
+                        : null,
                   );
                 },
               ),

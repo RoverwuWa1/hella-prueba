@@ -22,7 +22,7 @@ class BotonReto extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed, //  NO TOCAR
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF00B477), //  Color del botón
+          backgroundColor: const Color(0xFF17803E), //  Color del botón
           foregroundColor: Colors.white, //  Color del texto
           elevation: 0, //  Sombra
           shape: RoundedRectangleBorder(
@@ -34,4 +34,3 @@ class BotonReto extends StatelessWidget {
     );
   }
 }
-

@@ -120,12 +120,7 @@ class AppTheme {
     //  Solo definan el title: en cada pantalla.
     // =============================================================
     appBarTheme: AppBarTheme(
-      backgroundColor: const Color.fromARGB(
-        255,
-        23,
-        128,
-        62,
-      ), //  Fondo del AppBar
+      backgroundColor: const Color(0xFF17803E), //  Fondo del AppBar
       foregroundColor: AppColors.textPrimary, //  Color del texto e íconos
       elevation: 0,
       titleTextStyle: GoogleFonts.lato(
