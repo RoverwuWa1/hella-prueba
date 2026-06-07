@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
     // MaterialApp es el widget que nos da la estructura básica de
     // una aplicación de Material Design (rutas, temas, etc.).
     return MaterialApp(
-      title: 'Flutter Firebase Auth', // Título de la app
+      title: 'Hella', // Título de la app
       debugShowCheckedModeBanner: false, // Oculta la cinta de "debug"
       theme: AppTheme.theme,
       // ===============================================================
