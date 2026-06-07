@@ -204,9 +204,9 @@ class _HomeScreenState extends State<HomeScreen> {
               // Aquí va una lista, grid o lo que sea el core de la app.
               // Cambien el ícono, textos y colores de cada item.
               // ============================================================
-              const Text(
-                'Reto de hoy', //  Cambien este título
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              Text(
+                _fechaDesbloqueo != null ? 'Vista previa del siguiente reto' : 'Reto de hoy',
+		style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
 
               const SizedBox(height: 12),
