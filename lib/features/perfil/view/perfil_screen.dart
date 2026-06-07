@@ -184,6 +184,7 @@ class PerfilScreen extends StatelessWidget {
               // Pueden cambiar el título, íconos, colores y etiquetas.
               // Los valores (displayName, email) vienen de Firebase — no tocar.
               // ============================================================
+              const SizedBox(height: 24),
               _SectionCard(
                 title: 'Mi cuenta', //  Cambien el título
                 children: [
